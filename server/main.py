@@ -26,10 +26,37 @@ WEB_DIST = Path(__file__).resolve().parent.parent / "web" / "dist"
 
 
 # ---------------------------------------------------------------- health ----
+def _storage_state() -> dict:
+    """Whether the data dir survives a restart.
+
+    On hosts without a mounted disk the app still runs, but projects vanish on
+    every redeploy — a silent data loss, so the UI needs to be able to warn.
+    """
+    import os
+
+    data = config.DATA
+    try:
+        mounted = os.path.ismount(str(data))
+    except OSError:
+        mounted = False
+    free_gb = None
+    try:
+        st = os.statvfs(str(data))
+        free_gb = round(st.f_bavail * st.f_frsize / 1024**3, 1)
+    except OSError:
+        pass
+    return {
+        "durable": bool(mounted or os.environ.get("CLIPFORGE_DURABLE") == "1"),
+        "path": str(data),
+        "free_gb": free_gb,
+    }
+
+
 @app.get("/api/health")
 def health():
     return {
         "ok": True,
+        "storage": _storage_state(),
         "ffmpeg": media.ffmpeg_version(),
         "ytdlp": analyzer.ytdlp_available(),
         "cookies": (config.DATA / "cookies.txt").exists(),

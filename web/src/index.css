@@ -348,3 +348,21 @@ textarea:focus-visible, [role="button"]:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+
+/* Inline health banner (e.g. no persistent disk on a free host). */
+.banner {
+  max-width: 720px;
+  margin: 14px auto 0;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  border: 1px solid var(--line-2);
+  background: var(--panel-2);
+  color: var(--text);
+}
+.banner.warn {
+  border-color: color-mix(in srgb, var(--warn, #f5a524) 45%, transparent);
+  background: color-mix(in srgb, var(--warn, #f5a524) 12%, var(--panel));
+}
+.banner strong { font-weight: 650; }

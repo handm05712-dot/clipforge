@@ -25,6 +25,13 @@ services:
         value: /data/models/whisper
       - key: PYTHONUNBUFFERED
         value: "1"
+      # 512 MB containers need the smallest usable speech model.
+      - key: WHISPER_MODEL
+        value: tiny
+      # One thread: MediaPipe and ffmpeg both want a core, and the free plan
+      # gives a fraction of one. Oversubscribing is what OOM-killed the process.
+      - key: OMP_NUM_THREADS
+        value: "1"
       # Set these in the Render dashboard (Environment), not in the repo.
       - key: LLM_API_KEY
         sync: false

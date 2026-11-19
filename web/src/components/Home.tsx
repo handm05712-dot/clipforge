@@ -197,6 +197,13 @@ export function Home() {
           ready-made caption looks. Everything runs on your machine.
         </p>
 
+        {app.health?.storage && !app.health.storage.durable && (
+          <div className="banner warn" role="status">
+            <strong>This server has no permanent disk.</strong> Projects, exports and downloads are
+            erased whenever it restarts or redeploys. Attach a disk to keep your work.
+          </div>
+        )}
+
         <div
           className={"dropzone" + (drag ? " over" : "")}
           onDragOver={(e) => {

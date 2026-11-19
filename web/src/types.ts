@@ -167,6 +167,8 @@ export type HistoryInfo = { can_undo: boolean; can_redo: boolean; undo_label: st
 export type Health = {
   ok: boolean;
   platforms?: PlatformCatalogue;
+  /** False when the data folder is not on a mounted volume (lost on restart). */
+  storage?: { durable: boolean; path: string; free_gb: number | null };
   ffmpeg: string;
   ytdlp: boolean;
   presets: string[];

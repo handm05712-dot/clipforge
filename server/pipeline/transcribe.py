@@ -32,8 +32,14 @@ def get_model(name: str):
             from faster_whisper import WhisperModel
 
             # int8 on CPU keeps base/small usable on small VMs
+            # One thread per available core, and never more than 4: on a small
+            # container oversubscribing threads costs more memory than it saves.
+            import os
+
+            threads = int(os.environ.get("OMP_NUM_THREADS") or 0) or max(1, min(4, os.cpu_count() or 1))
             _MODEL_CACHE[name] = WhisperModel(name, device="cpu", compute_type="int8",
-                                              download_root=_model_root())
+                                             cpu_threads=threads, num_workers=1,
+                                             download_root=_model_root())
         return _MODEL_CACHE[name]
 
 
@@ -54,7 +60,9 @@ def transcribe(audio_path: Path, on_progress: Callable[[float, str], None] | Non
         word_timestamps=True,
         vad_filter=True,
         vad_parameters={"min_silence_duration_ms": 300},
-        beam_size=5,
+        # Beam 1 and no cross-window context: noticeably leaner, and accurate
+        # enough for captions. Beam 5 peaked memory on 512 MB containers.
+        beam_size=1,
         condition_on_previous_text=False,
     )
 
