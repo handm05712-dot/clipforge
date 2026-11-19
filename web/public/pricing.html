@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pricing — ClipForge | Free, open-source AI video clipping</title>
+<meta name="description" content="ClipForge turns long videos into short vertical clips with word-synced captions. Free and MIT-licensed, running on your own machine. No subscription, no credits, no watermark." />
+<link rel="canonical" href="https://example.com/pricing" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ClipForge — free and open-source AI video clipping" />
+<meta property="og:description" content="Turn a single long video into a month of short vertical clips with word-synced captions. Free, MIT-licensed, rendered on your computer." />
+<meta property="og:url" content="https://example.com/pricing" />
+<meta property="og:image" content="https://example.com/og-pricing.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/favicon.svg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: "#0B0B12",
+          panel: "#12121C",
+          edge: "rgba(255,255,255,0.08)",
+          accent: { DEFAULT: "#7C5CFF", soft: "#9B85FF", deep: "#5B3BE0" },
+        },
+        fontFamily: {
+          display: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+          body: ["Inter", "system-ui", "sans-serif"],
+        },
+        borderRadius: { card: "16px" },
+        keyframes: {
+          rise: { "0%": { opacity: "0", transform: "translateY(18px)" }, "100%": { opacity: "1", transform: "none" } },
+        },
+        animation: { rise: "rise .7s cubic-bezier(.2,.7,.2,1) both" },
+      },
+    },
+  };
+</script>
+<style>
+  :root { color-scheme: dark; }
+  html, body { background: #0B0B12; }
+  body { font-family: Inter, system-ui, sans-serif; color: #E9E9F2; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, .font-display { font-family: "Plus Jakarta Sans", system-ui, sans-serif; letter-spacing: -0.022em; }
+  .wrap { width: 100%; max-width: 1160px; margin-inline: auto; padding-inline: 20px; }
+  .card { background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; }
+  .card-hover { transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .25s, background .25s; }
+  .card-hover:hover { transform: translateY(-4px); border-color: rgba(124,92,255,.45); }
+  .glow { position: relative; }
+  .glow::before {
+    content: ""; position: absolute; inset: -2px; border-radius: 18px; z-index: -1;
+    background: radial-gradient(60% 70% at 50% 0%, rgba(124,92,255,.55), transparent 70%);
+    filter: blur(26px); opacity: .85;
+  }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600;
+         border-radius: 12px; padding: 12px 20px; transition: background .2s, transform .2s, box-shadow .25s; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: #7C5CFF; color: #0B0B12; box-shadow: 0 10px 30px -10px rgba(124,92,255,.8); }
+  .btn-primary:hover { background: #9B85FF; }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.14); color: #E9E9F2; }
+  .btn-ghost:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.24); }
+  .focusable:focus-visible { outline: 2px solid #9B85FF; outline-offset: 3px; border-radius: 10px; }
+  .reveal { opacity: 0; transform: translateY(16px); }
+  .reveal.in { animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .range { -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px; background: #232333; width: 100%; }
+  .range::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+    background: #7C5CFF; border: 3px solid #14141F; box-shadow: 0 0 0 4px rgba(124,92,255,.25); cursor: pointer; }
+  .range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #7C5CFF; border: 3px solid #14141F; cursor: pointer; }
+  .range:focus-visible { outline: 2px solid #9B85FF; outline-offset: 6px; }
+  /* border-collapse: collapse silently disables position: sticky on cells, so the
+     borders are drawn with box-shadow and the table stays separate. */
+  table.compare { border-collapse: separate; border-spacing: 0; }
+  table.compare th, table.compare td { box-shadow: inset 0 -1px 0 rgba(255,255,255,.07); }
+  .grid > .reveal, .grid > .card { min-width: 0; }
+  .sticky-col { position: sticky; left: 0; z-index: 2; background: #0B0B12;
+                box-shadow: inset 0 -1px 0 rgba(255,255,255,.07), 1px 0 0 rgba(255,255,255,.07); }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(45deg); }
+  details[open] .answer { animation: rise .28s ease forwards; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .card-hover:hover { transform: none; }
+    * { transition-duration: .001ms !important; }
+  }
+  .skip { position: absolute; left: -999px; top: 8px; background: #7C5CFF; color: #0B0B12; padding: 10px 16px; border-radius: 10px; z-index: 80; }
+  .skip:focus { left: 16px; }
+</style>
+</head>
+<body class="font-body antialiased selection:bg-accent selection:text-ink">
+<a href="#plans" class="skip focusable">Skip to plans</a>
+
+<!-- 1 · announcement -->
+<div class="bg-accent-deep/25 border-b border-edge">
+  <div class="wrap flex flex-wrap items-center justify-center gap-x-3 gap-y-1 py-2.5 text-center text-[13px]">
+    <span class="text-accent-soft font-semibold">MIT licensed</span>
+    <span class="text-white/75">Every feature is free and runs on your machine. The source is public — read it, fork it, ship it.</span>
+    <a href="https://github.com/zhouxiaoka/autoclip" rel="noopener" class="focusable underline decoration-accent/60 underline-offset-4 font-medium hover:text-white">View the repo</a>
+  </div>
+</div>
+
+<!-- 2 · navbar -->
+<header class="sticky top-0 z-50 border-b border-edge bg-ink/85 backdrop-blur-xl">
+  <nav class="wrap flex h-16 items-center gap-6" aria-label="Main">
+    <a href="/" class="focusable flex items-center gap-2.5 font-display text-[17px] font-extrabold tracking-tight">
+      <span class="grid h-8 w-8 place-items-center rounded-[9px] bg-accent text-ink" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4v16l13-8L7 4Z" fill="currentColor"/></svg>
+      </span>
+      ClipForge
+    </a>
+    <ul class="hidden items-center gap-7 text-[14.5px] text-white/70 md:flex">
+      <li><a href="#plans" class="focusable hover:text-white transition" aria-current="page">Pricing</a></li>
+      <li><a href="#compare" class="focusable hover:text-white transition">Tools</a></li>
+      <li><a href="#cost" class="focusable hover:text-white transition">Cost</a></li>
+      <li><a href="#faq" class="focusable hover:text-white transition">Docs</a></li>
+    </ul>
+    <div class="ml-auto hidden items-center gap-3 md:flex">
+      <a href="https://github.com/zhouxiaoka/autoclip" rel="noopener" class="focusable text-[14.5px] text-white/70 hover:text-white transition">GitHub</a>
+      <a href="#final" class="btn btn-primary focusable text-[14.5px]">Download free</a>
+    </div>
+    <button id="menuBtn" class="focusable ml-auto grid h-10 w-10 place-items-center rounded-lg border border-edge md:hidden"
+            aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </nav>
+  <div id="mobileMenu" class="hidden border-t border-edge md:hidden">
+    <ul class="wrap flex flex-col gap-1 py-3 text-[15px]">
+      <li><a class="focusable block rounded-lg px-3 py-2.5 hover:bg-white/5" href="#plans">Pricing</a></li>
+      <li><a class="focusable block rounded-lg px-3 py-2.5 hover:bg-white/5" href="#compare">Tools</a></li>
+      <li><a class="focusable block rounded-lg px-3 py-2.5 hover:bg-white/5" href="#cost">Cost</a></li>
+      <li><a class="focusable block rounded-lg px-3 py-2.5 hover:bg-white/5" href="#faq">Docs</a></li>
+      <li class="pt-2"><a href="#final" class="btn btn-primary focusable w-full">Download free</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- 3 · hero -->
+<main id="main">
+<section class="relative overflow-hidden pt-16 pb-10 sm:pt-24">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-40 h-[520px]"
+       style="background: radial-gradient(55% 60% at 50% 30%, rgba(124,92,255,.22), transparent 70%)"></div>
+  <div class="wrap relative text-center">
+    <p class="reveal mb-5 inline-flex items-center gap-2 rounded-full border border-edge bg-white/5 px-3.5 py-1.5 text-[12.5px] text-white/70">
+      <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+      Free and open source · MIT · runs on your computer
+    </p>
+    <h1 class="reveal mx-auto max-w-[15ch] font-display text-[38px] font-extrabold leading-[1.05] sm:text-[58px] lg:text-[68px]">
+      One long video.<br class="hidden sm:block" />
+      <span class="bg-gradient-to-b from-white via-white to-white/80 bg-clip-text text-transparent">A month of posts.</span>
+    </h1>
+    <p class="reveal mx-auto mt-6 max-w-[58ch] text-[15.5px] leading-relaxed text-white/70 sm:text-[17px]">
+      ClipForge finds the moments worth posting, reframes them to vertical, and burns captions you control.
+      No subscription and no credits: cutting, framing and rendering all happen on your own machine.
+    </p>
+
+    <div class="reveal mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a href="#final" class="btn btn-primary focusable w-full sm:w-auto">Download for free</a>
+      <a href="https://github.com/zhouxiaoka/autoclip" rel="noopener" class="btn btn-ghost focusable w-full sm:w-auto">Read the source</a>
+    </div>
+    <p class="mt-3 text-[12.5px] text-white/65">macOS, Windows and Linux · no account needed · optional cloud models use your own key</p>
+
+    <div class="reveal mx-auto mt-10 grid max-w-[760px] gap-3 sm:grid-cols-3">
+      <div class="card px-4 py-4 text-left">
+        <p class="font-display text-[22px] font-extrabold leading-none">$0</p>
+        <p class="mt-1.5 text-[12.5px] text-white/70">For the app, forever. MIT licence.</p>
+      </div>
+      <div class="card px-4 py-4 text-left">
+        <p class="font-display text-[22px] font-extrabold leading-none">$0</p>
+        <p class="mt-1.5 text-[12.5px] text-white/70">For clipping, captions and export on your own hardware.</p>
+      </div>
+      <div class="card px-4 py-4 text-left">
+        <p class="font-display text-[22px] font-extrabold leading-none">Your key</p>
+        <p class="mt-1.5 text-[12.5px] text-white/70">Only if you switch on a cloud model, billed by that provider.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · what you get -->
+<section id="plans" class="scroll-mt-24 py-10" aria-labelledby="plans-h">
+  <div class="wrap">
+    <div class="mx-auto max-w-[62ch] text-center">
+      <h2 id="plans-h" class="font-display text-[24px] font-bold sm:text-[30px]">One version. Everything included.</h2>
+      <p class="mt-3 text-[14.5px] leading-relaxed text-white/70">
+        There are no tiers to compare because nothing is held back. Every caption preset, every aspect ratio,
+        batch export and the brand kit are in the free download.
+      </p>
+    </div>
+
+    <div class="mt-8 grid gap-5 md:grid-cols-3 md:items-start">
+
+      <article class="reveal card card-hover flex flex-col p-6 sm:p-7">
+        <h3 class="font-display text-[19px] font-bold">Cut and caption</h3>
+        <p class="mt-2 text-[14px] leading-relaxed text-white/70">
+          Long video in, short vertical clips out — with captions timed per word.
+        </p>
+        <p class="mt-5 font-display text-[30px] font-extrabold leading-none">Free</p>
+        <p class="mt-1.5 text-[12.5px] text-white/65">No limit on exports</p>
+        <a href="#final" class="btn btn-ghost focusable mt-5 w-full">Download</a>
+        <ul class="mt-6 space-y-2 text-[13.5px] text-white/70">
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Auto highlight detection</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Word-by-word captions</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Silence and filler removal</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>9:16, 1:1 and 16:9 export</li>
+        </ul>
+      </article>
+
+      <article class="reveal card card-hover glow relative flex flex-col p-6 sm:p-7"
+               style="background:linear-gradient(180deg, rgba(124,92,255,.14), rgba(255,255,255,.02) 60%); border-color: rgba(124,92,255,.5)">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3.5 py-1 text-[11.5px] font-bold uppercase tracking-[0.08em] text-ink">
+          Everything included
+        </span>
+        <h3 class="font-display text-[19px] font-bold">Look and feel</h3>
+        <p class="mt-2 text-[14px] leading-relaxed text-white/70">
+          The parts creators usually pay extra for, in the same download.
+        </p>
+        <p class="mt-5 font-display text-[30px] font-extrabold leading-none">Free</p>
+        <p class="mt-1.5 text-[12.5px] text-white/65">All presets, no watermark</p>
+        <a href="#final" class="btn btn-primary focusable mt-5 w-full">Download</a>
+        <ul class="mt-6 space-y-2 text-[13.5px] text-white/75">
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Caption presets, fonts, stroke, shadow</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Face-tracked reframe and blur background</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Gameplay layouts with facecam</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Brand kit: logo, colours, fonts</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Batch export</li>
+        </ul>
+      </article>
+
+      <article class="reveal card card-hover flex flex-col p-6 sm:p-7">
+        <h3 class="font-display text-[19px] font-bold">Models and data</h3>
+        <p class="mt-2 text-[14px] leading-relaxed text-white/70">
+          Bring your own model — local, or a cloud provider you already pay for.
+        </p>
+        <p class="mt-5 font-display text-[30px] font-extrabold leading-none">You choose</p>
+        <p class="mt-1.5 text-[12.5px] text-white/65">Local models cost nothing</p>
+        <a href="#cost" class="btn btn-ghost focusable mt-5 w-full">See real costs</a>
+        <ul class="mt-6 space-y-2 text-[13.5px] text-white/70">
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Whisper or SenseVoice on your own CPU</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Ollama and LM Studio, no key required</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Any OpenAI-compatible cloud endpoint</li>
+          <li class="flex gap-2"><span class="text-accent-soft" aria-hidden="true">✓</span>Your footage is not used for training</li>
+        </ul>
+      </article>
+    </div>
+
+    <p class="mx-auto mt-6 max-w-[62ch] text-center text-[12.5px] leading-relaxed text-white/65">
+      The one thing the project does not control is a cloud provider's bill. If you point ClipForge at a paid API,
+      that provider charges you at its own rates — nothing passes through us.
+    </p>
+  </div>
+</section>
+
+<!-- 5 · nothing to cancel -->
+<section class="py-12" aria-labelledby="guarantee-h">
+  <div class="wrap">
+    <div class="reveal card grid gap-8 p-7 sm:p-9 md:grid-cols-[1.1fr_1fr] md:items-center">
+      <div>
+        <h2 id="guarantee-h" class="font-display text-[24px] font-bold sm:text-[28px]">
+          Nothing to cancel, nothing to lose
+        </h2>
+        <p class="mt-3 max-w-[46ch] text-[14.5px] leading-relaxed text-white/70">
+          The worst case is you do not like it and delete the app. There is no card on file and
+          no trial that quietly turns into a charge.
+        </p>
+      </div>
+      <ul class="space-y-3 text-[14px]">
+        <li class="flex gap-3 rounded-xl border border-edge bg-black/20 px-4 py-3">
+          <span class="mt-0.5 text-accent-soft" aria-hidden="true">✓</span>
+          <span><strong class="font-semibold">No account, no card.</strong> Download, open, drop in a video.</span>
+        </li>
+        <li class="flex gap-3 rounded-xl border border-edge bg-black/20 px-4 py-3">
+          <span class="mt-0.5 text-accent-soft" aria-hidden="true">✓</span>
+          <span><strong class="font-semibold">No watermark on exports.</strong> Every clip comes out clean.</span>
+        </li>
+        <li class="flex gap-3 rounded-xl border border-edge bg-black/20 px-4 py-3">
+          <span class="mt-0.5 text-accent-soft" aria-hidden="true">✓</span>
+          <span><strong class="font-semibold">MIT licence.</strong> Fork it, rebrand it, use it for client work.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · real cost -->
+<section id="cost" class="scroll-mt-24 py-12" aria-labelledby="cost-h">
+  <div class="wrap">
+    <h2 id="cost-h" class="font-display text-[24px] font-bold sm:text-[30px]">What it actually costs to run</h2>
+    <p class="mt-2 max-w-[62ch] text-[14px] text-white/70">
+      Clipping and rendering are free because they use your CPU and GPU. The only possible bill comes from a text
+      or speech model, and only if you choose a cloud one. Estimate it below.
+    </p>
+
+    <div class="mt-7 grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_1fr]">
+      <div class="reveal card min-w-0 p-6 sm:p-7">
+        <h3 class="font-display text-[15px] font-bold">Three ways to run the models</h3>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full min-w-[430px] text-left text-[13.5px]">
+            <caption class="sr-only">Model options compared by cost and privacy</caption>
+            <thead>
+              <tr class="text-[11.5px] uppercase tracking-[0.07em] text-white/60">
+                <th scope="col" class="pb-2 pr-3 font-semibold">Option</th>
+                <th scope="col" class="pb-2 pr-3 font-semibold">Monthly cost</th>
+                <th scope="col" class="pb-2 font-semibold">Your video leaves the machine</th>
+              </tr>
+            </thead>
+            <tbody class="text-white/70">
+              <tr><td class="border-t border-edge py-3 pr-3 text-white/85">Local <span class="text-white/60">(Ollama, LM Studio, Whisper)</span></td>
+                  <td class="border-t border-edge py-3 pr-3">$0</td><td class="border-t border-edge py-3">No</td></tr>
+              <tr><td class="border-t border-edge py-3 pr-3 text-white/85">Cloud model with your key</td>
+                  <td class="border-t border-edge py-3 pr-3">Whatever the provider bills</td><td class="border-t border-edge py-3">Transcript and metadata, or audio if you use cloud speech</td></tr>
+              <tr><td class="border-t border-edge py-3 pr-3 text-white/85">Creator captions already on the source</td>
+                  <td class="border-t border-edge py-3 pr-3">$0</td><td class="border-t border-edge py-3">No</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 text-[12.5px] leading-relaxed text-white/65">
+          Using captions the creator already uploaded skips transcription entirely — usually the slowest and most expensive step.
+        </p>
+      </div>
+
+      <div class="reveal card min-w-0 p-6 sm:p-7">
+        <h3 class="font-display text-[15px] font-bold">Cloud-model estimate</h3>
+        <p class="mt-1.5 text-[12.5px] text-white/65">
+          Defaults are a mid-priced model's list rates. Replace them with your provider's numbers.
+        </p>
+
+        <div class="mt-5 space-y-5">
+          <div>
+            <label for="srcMin" class="flex items-baseline justify-between text-[13.5px] font-medium">
+              <span>Source length</span>
+              <output id="srcMinOut" for="srcMin" class="font-display text-[15px] font-bold text-accent-soft">120 min</output>
+            </label>
+            <input id="srcMin" class="range focusable mt-2.5" type="range" min="10" max="240" step="10" value="120" />
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="field">
+              <label for="inPrice" class="text-[12.5px] text-white/70">Input $ per 1M tokens</label>
+              <input id="inPrice" type="number" min="0" step="0.01" value="0.15"
+                     class="mt-1.5 w-full rounded-lg border border-edge bg-black/30 px-3 py-2 text-[13.5px] focusable" />
+            </div>
+            <div class="field">
+              <label for="outPrice" class="text-[12.5px] text-white/70">Output $ per 1M tokens</label>
+              <input id="outPrice" type="number" min="0" step="0.01" value="0.60"
+                     class="mt-1.5 w-full rounded-lg border border-edge bg-black/30 px-3 py-2 text-[13.5px] focusable" />
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-edge bg-black/25 px-4 py-3.5" aria-live="polite">
+            <p class="text-[12.5px] text-white/65">Estimated model cost for one long video</p>
+            <p id="costOut" class="mt-1 font-display text-[28px] font-extrabold leading-none text-white">$0.01</p>
+            <p id="costNote" class="mt-1.5 text-[12px] text-white/65">
+              Assumes about 1,100 input and 220 output tokens per source minute after caption cleaning.
+            </p>
+          </div>
+        </div>
+
+        <p class="mt-4 rounded-xl border border-amber-400/25 bg-amber-400/8 px-3.5 py-3 text-[12px] leading-relaxed text-amber-100">
+          An estimate, not a quote. Token counts vary with transcript density and how many clips you ask for.
+          Your provider's invoice is the real number.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · real clips / placeholders -->
+<section class="py-12" aria-labelledby="voices-h">
+  <div class="wrap">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 id="voices-h" class="font-display text-[24px] font-bold sm:text-[30px]">Made with it</h2>
+        <p class="mt-2 max-w-[58ch] text-[14px] text-white/70">
+          Placeholder cards — swap in your own exported clips and viewer feedback before launch.
+        </p>
+      </div>
+      <span class="rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1.5 text-[12px] font-semibold text-amber-200">
+        Sample content
+      </span>
+    </div>
+    <ul class="mt-7 grid gap-5 md:grid-cols-3">
+      <li class="reveal card card-hover overflow-hidden">
+        <div class="grid aspect-[4/3] place-items-center bg-black/40 text-[12px] text-white/60" role="img"
+             aria-label="Placeholder for an exported vertical clip">
+          9:16 clip · drop a poster image here
+        </div>
+        <div class="p-5">
+          <p class="text-[11.5px] font-semibold uppercase tracking-[0.09em] text-amber-200/80">Placeholder</p>
+          <p class="mt-2 text-[13.5px] leading-relaxed text-white/75">
+            Interview clip with word-by-word captions, reframed to the speaker.
+          </p>
+        </div>
+      </li>
+      <li class="reveal card card-hover overflow-hidden" style="animation-delay:.08s">
+        <div class="grid aspect-[4/3] place-items-center bg-black/40 text-[12px] text-white/60" role="img"
+             aria-label="Placeholder for an exported square clip">
+          1:1 clip · drop a poster image here
+        </div>
+        <div class="p-5">
+          <p class="text-[11.5px] font-semibold uppercase tracking-[0.09em] text-amber-200/80">Placeholder</p>
+          <p class="mt-2 text-[13.5px] leading-relaxed text-white/75">
+            Podcast segment with the brand kit logo and a custom caption font.
+          </p>
+        </div>
+      </li>
+      <li class="reveal card card-hover overflow-hidden" style="animation-delay:.16s">
+        <div class="grid aspect-[4/3] place-items-center bg-black/40 text-[12px] text-white/60" role="img"
+             aria-label="Placeholder for an exported landscape clip">
+          16:9 clip · drop a poster image here
+        </div>
+        <div class="p-5">
+          <p class="text-[11.5px] font-semibold uppercase tracking-[0.09em] text-amber-200/80">Placeholder</p>
+          <p class="mt-2 text-[13.5px] leading-relaxed text-white/75">
+            Full-screen gameplay layout with a facecam corner and stream-safe captions.
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 8 · compare -->
+<section id="compare" class="scroll-mt-24 py-12" aria-labelledby="compare-h">
+  <div class="wrap">
+    <h2 id="compare-h" class="font-display text-[24px] font-bold sm:text-[30px]">Free here, paid elsewhere</h2>
+    <p class="mt-2 max-w-[62ch] text-[14px] text-white/70">
+      A quick check on what a typical hosted clipper charges for. Scroll the table sideways on a phone.
+    </p>
+
+    <div class="reveal mt-7 overflow-x-auto rounded-card border border-edge" tabindex="0" role="region"
+         aria-labelledby="compare-h" aria-label="Feature comparison table, scroll horizontally">
+      <table class="compare w-full min-w-[640px] text-left text-[13.5px]">
+        <caption class="sr-only">What ClipForge includes for free compared with typical paid hosted tools</caption>
+        <thead>
+          <tr class="bg-white/[0.04]">
+            <th scope="col" class="sticky-col px-4 py-3.5 text-[12px] font-semibold uppercase tracking-[0.07em] text-white/60">Feature</th>
+            <th scope="col" class="px-4 py-3.5 font-display text-[14px] font-bold text-accent-soft">ClipForge</th>
+            <th scope="col" class="px-4 py-3.5 font-display text-[14px] font-bold">Typical hosted tool</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th colspan="3" scope="colgroup" class="sticky-col px-4 pt-6 pb-2 text-[11.5px] font-semibold uppercase tracking-[0.09em] text-accent-soft">AI Clipping</th></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Highlight detection</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Included on paid plans</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Source length limit</th>
+              <td class="px-4 py-3 text-white/75">Your disk and CPU</td><td class="px-4 py-3 text-white/70">Often capped per plan</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Silence &amp; filler removal</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Varies by plan</td></tr>
+
+          <tr><th colspan="3" scope="colgroup" class="sticky-col px-4 pt-6 pb-2 text-[11.5px] font-semibold uppercase tracking-[0.09em] text-accent-soft">Captions</th></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Word-by-word highlighting</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Included</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Custom fonts, stroke, shadow</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Usually a higher tier</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Brand kit</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Team tier</td></tr>
+
+          <tr><th colspan="3" scope="colgroup" class="sticky-col px-4 pt-6 pb-2 text-[11.5px] font-semibold uppercase tracking-[0.09em] text-accent-soft">Reframe</th></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Face-tracked 9:16</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Included</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Gameplay layouts</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Rarely offered</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Blur background</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Varies by plan</td></tr>
+
+          <tr><th colspan="3" scope="colgroup" class="sticky-col px-4 pt-6 pb-2 text-[11.5px] font-semibold uppercase tracking-[0.09em] text-accent-soft">Export</th></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">9:16, 1:1, 16:9</th>
+              <td class="px-4 py-3 text-white/75">Included</td><td class="px-4 py-3 text-white/70">Included</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Watermark</th>
+              <td class="px-4 py-3 text-white/75">None</td><td class="px-4 py-3 text-white/70">On the free tier</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Batch export</th>
+              <td class="px-4 py-3 text-white/75">Unlimited</td><td class="px-4 py-3 text-white/70">Capped by credits</td></tr>
+
+          <tr><th colspan="3" scope="colgroup" class="sticky-col px-4 pt-6 pb-2 text-[11.5px] font-semibold uppercase tracking-[0.09em] text-accent-soft">Team</th></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Seats</th>
+              <td class="px-4 py-3 text-white/75">Install per person</td><td class="px-4 py-3 text-white/70">Priced per seat</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Your footage on their servers</th>
+              <td class="px-4 py-3 text-white/75">Never, unless you pick a cloud model</td><td class="px-4 py-3 text-white/70">Always, that is how it runs</td></tr>
+          <tr><th scope="row" class="sticky-col px-4 py-3 font-medium text-white/85">Source code</th>
+              <td class="px-4 py-3 text-white/75">Public, MIT</td><td class="px-4 py-3 text-white/70">Closed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · FAQ -->
+<section class="py-12" aria-labelledby="faq-h">
+  <div class="wrap max-w-[820px]">
+    <h2 id="faq-h" class="font-display text-[24px] font-bold sm:text-[30px]">Questions, answered</h2>
+    <p class="mt-2 text-[14px] text-white/70">Licence, models, costs and your footage.</p>
+
+    <div class="mt-7 space-y-3" id="faq">
+
+      <details class="card group px-5 py-4" open>
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Is it really free?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          Yes. The app is MIT-licensed and every feature is in the free download. Cutting, framing, captions and
+          rendering use your own hardware, so there is no per-minute or per-credit charge.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Where does money ever come in?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          Only if you choose a cloud model for analysis or speech recognition. You enter your own API key and that
+          provider bills you directly. Local models, and videos that already have captions, cost nothing.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Do I need an account or a card?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          No. Download the app, open it, and import a video. There is no sign-up wall before your first export.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Which video formats can I use?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          Anything FFmpeg reads — MP4, MOV, MKV, WEBM, M4V and AVI are the common ones. You can also paste a link
+          to a public video, or import a subtitle file to skip transcription.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          What hardware does it need?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          A recent laptop is enough for clipping and rendering. Running a local speech or language model wants more
+          memory and benefits from a GPU — that is the one place a slower machine shows up.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Can I use my own fonts and caption style?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          Yes. The presets are data, not hard-coded looks: set the font, size, colours, stroke, shadow and animation,
+          and save it as your own preset or as part of the brand kit.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Does it work offline?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          Clipping, rendering and local models work with no connection at all. You need internet only to download
+          the app or a model the first time, and for cloud features you switch on yourself.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Who owns the clips I make?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          You do, subject to the rights you have in the source footage. There is no watermark and no licence claim
+          on your exports. Make sure you have permission to reuse the original video.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Where are my files kept?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          In the app's own folder on your computer, and you can point it at another drive. Deleting a project removes
+          its files. If you enable a cloud model, only the transcript (and audio, for cloud speech) is sent.
+        </p>
+      </details>
+
+      <details class="card group px-5 py-4">
+        <summary class="focusable flex items-center justify-between gap-4 font-display text-[15px] font-semibold">
+          Can I use it for client work, or fork it?
+          <span class="chev shrink-0 text-accent-soft transition-transform" aria-hidden="true">+</span>
+        </summary>
+        <p class="answer mt-3 text-[14px] leading-relaxed text-white/70">
+          Yes. The MIT licence allows commercial use and modification. Keep the licence notice with any copy you
+          redistribute, and rebrand it as your own if you want.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · final CTA + footer -->
+<section id="final" class="scroll-mt-24 py-12">
+  <div class="wrap">
+    <div class="reveal relative overflow-hidden rounded-card border border-accent/30 px-6 py-12 text-center sm:px-10 sm:py-16"
+         style="background: radial-gradient(70% 120% at 50% 0%, rgba(124,92,255,.28), rgba(11,11,18,0) 70%), #101018">
+      <h2 class="mx-auto max-w-[24ch] font-display text-[28px] font-extrabold leading-tight sm:text-[38px]">
+        Post the clips you already filmed
+      </h2>
+      <p class="mx-auto mt-4 max-w-[52ch] text-[14.5px] leading-relaxed text-white/70 sm:text-[16px]">
+        Download the app, drop in one long video and export a week of vertical clips.
+        Nothing to subscribe to, nothing to cancel.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="https://github.com/zhouxiaoka/autoclip/releases/latest" rel="noopener" class="btn btn-primary focusable w-full sm:w-auto">Download the latest release</a>
+        <a href="https://github.com/zhouxiaoka/autoclip" rel="noopener" class="btn btn-ghost focusable w-full sm:w-auto">Browse the code</a>
+      </div>
+      <p class="mt-4 text-[12.5px] text-white/65">Free forever · MIT licence · no account required</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="border-t border-edge py-12">
+  <div class="wrap">
+    <div class="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+      <div>
+        <a href="/" class="focusable inline-flex items-center gap-2.5 font-display text-[16px] font-extrabold">
+          <span class="grid h-7 w-7 place-items-center rounded-lg bg-accent text-ink" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4v16l13-8L7 4Z" fill="currentColor"/></svg>
+          </span>
+          ClipForge
+        </a>
+        <p class="mt-3 max-w-[30ch] text-[13px] leading-relaxed text-white/65">
+          Free, open-source clipping. Long videos into short vertical clips, rendered on your machine.
+        </p>
+        <ul class="mt-5 flex gap-2">
+          <li><a href="https://github.com/zhouxiaoka/autoclip" rel="noopener" aria-label="ClipForge on GitHub" class="focusable grid h-9 w-9 place-items-center rounded-lg border border-edge text-white/70 hover:text-white hover:border-white/25 transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.35 4.7-4.58 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+          </a></li>
+          <li><a href="#" aria-label="ClipForge on X" class="focusable grid h-9 w-9 place-items-center rounded-lg border border-edge text-white/70 hover:text-white hover:border-white/25 transition">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 3h3l-7 8 7.5 10h-6l-4.5-6-5.2 6H2.3l7.4-8.5L2.5 3h6.2l4.1 5.5L17.5 3Z"/></svg>
+          </a></li>
+          <li><a href="#" aria-label="ClipForge on YouTube" class="focusable grid h-9 w-9 place-items-center rounded-lg border border-edge text-white/70 hover:text-white hover:border-white/25 transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.2 22 12 22 12s0-3.2-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/></svg>
+          </a></li>
+        </ul>
+      </div>
+
+      <nav aria-labelledby="f-product">
+        <h2 id="f-product" class="font-display text-[13px] font-bold text-white/85">Product</h2>
+        <ul class="mt-3.5 space-y-2.5 text-[13px] text-white/65">
+          <li><a href="#plans" class="focusable hover:text-white transition">What's included</a></li>
+          <li><a href="#compare" class="focusable hover:text-white transition">Comparison</a></li>
+          <li><a href="#cost" class="focusable hover:text-white transition">Running costs</a></li>
+          <li><a href="https://github.com/zhouxiaoka/autoclip/releases/latest" rel="noopener" class="focusable hover:text-white transition">Releases</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="f-resources">
+        <h2 id="f-resources" class="font-display text-[13px] font-bold text-white/85">Resources</h2>
+        <ul class="mt-3.5 space-y-2.5 text-[13px] text-white/65">
+          <li><a href="https://github.com/zhouxiaoka/autoclip" rel="noopener" class="focusable hover:text-white transition">Source code</a></li>
+          <li><a href="https://github.com/zhouxiaoka/autoclip/issues" rel="noopener" class="focusable hover:text-white transition">Issues</a></li>
+          <li><a href="https://github.com/zhouxiaoka/autoclip#readme" rel="noopener" class="focusable hover:text-white transition">Docs</a></li>
+          <li><a href="https://github.com/zhouxiaoka/autoclip/blob/main/CHANGELOG.md" rel="noopener" class="focusable hover:text-white transition">Changelog</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="f-community">
+        <h2 id="f-community" class="font-display text-[13px] font-bold text-white/85">Community</h2>
+        <ul class="mt-3.5 space-y-2.5 text-[13px] text-white/65">
+          <li><a href="https://github.com/zhouxiaoka/autoclip/blob/main/CONTRIBUTING.md" rel="noopener" class="focusable hover:text-white transition">Contributing</a></li>
+          <li><a href="https://github.com/zhouxiaoka/autoclip/discussions" rel="noopener" class="focusable hover:text-white transition">Discussions</a></li>
+          <li><a href="#" class="focusable hover:text-white transition">Contact</a></li>
+          <li><a href="#" class="focusable hover:text-white transition">Case studies</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="f-legal">
+        <h2 id="f-legal" class="font-display text-[13px] font-bold text-white/85">Legal</h2>
+        <ul class="mt-3.5 space-y-2.5 text-[13px] text-white/65">
+          <li><a href="https://github.com/zhouxiaoka/autoclip/blob/main/LICENSE" rel="noopener" class="focusable hover:text-white transition">MIT licence</a></li>
+          <li><a href="#" class="focusable hover:text-white transition">Privacy</a></li>
+          <li><a href="#" class="focusable hover:text-white transition">Terms</a></li>
+          <li><a href="#" class="focusable hover:text-white transition">Cookies</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mt-10 flex flex-col gap-3 border-t border-edge pt-6 text-[12.5px] text-white/65 sm:flex-row sm:items-center sm:justify-between">
+      <p>© <span id="year">2026</span> ClipForge. Released under the MIT licence.</p>
+      <p>Not affiliated with Instagram, YouTube or TikTok.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- mobile menu ---------- */
+  var menuBtn = document.getElementById("menuBtn");
+  var menu = document.getElementById("mobileMenu");
+  menuBtn.addEventListener("click", function () {
+    var open = menu.classList.toggle("hidden") === false;
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  });
+  menu.addEventListener("click", function (e) {
+    if (e.target.closest("a")) {
+      menu.classList.add("hidden");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open menu");
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !menu.classList.contains("hidden")) {
+      menu.classList.add("hidden");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.focus();
+    }
+  });
+
+  /* ---------- scroll reveal ---------- */
+  var reveals = document.querySelectorAll(".reveal");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced || !("IntersectionObserver" in window)) {
+    reveals.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    reveals.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- cloud-model cost estimate ----------
+     Token estimates per source minute, after caption cleaning. These are the
+     page's stated assumptions; the provider's invoice is authoritative. */
+  var IN_TOKENS_PER_MIN = 1100;
+  var OUT_TOKENS_PER_MIN = 220;
+  var srcMin = document.getElementById("srcMin");
+  var inPrice = document.getElementById("inPrice");
+  var outPrice = document.getElementById("outPrice");
+
+  function money(n) {
+    if (n >= 1) return "$" + n.toFixed(2);
+    if (n >= 0.01) return "$" + n.toFixed(3);
+    return "$" + n.toFixed(4);
+  }
+  function calcCost() {
+    var mins = Number(srcMin.value);
+    var pin = Math.max(0, Number(inPrice.value) || 0);
+    var pout = Math.max(0, Number(outPrice.value) || 0);
+    var inTokens = mins * IN_TOKENS_PER_MIN;
+    var outTokens = mins * OUT_TOKENS_PER_MIN;
+    var total = (inTokens / 1e6) * pin + (outTokens / 1e6) * pout;
+    document.getElementById("srcMinOut").textContent = mins + " min";
+    document.getElementById("costOut").textContent = total === 0 ? "$0.00" : money(total);
+    document.getElementById("costNote").textContent =
+      "About " + Math.round(inTokens).toLocaleString("en-US") + " input and " +
+      Math.round(outTokens).toLocaleString("en-US") + " output tokens for " + mins + " minutes.";
+  }
+  [srcMin, inPrice, outPrice].forEach(function (el) { el.addEventListener("input", calcCost); });
+  calcCost();
+
+  /* ---------- accordion: one open at a time ---------- */
+  var faq = document.getElementById("faq");
+  faq.addEventListener("toggle", function (e) {
+    var opened = e.target;
+    if (opened.open) {
+      Array.prototype.forEach.call(faq.querySelectorAll("details"), function (d) {
+        if (d !== opened) d.open = false;
+      });
+    }
+  }, true);
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

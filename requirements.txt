@@ -1,0 +1,24 @@
+# ClipForge — Python dependencies
+# Install with:  uv pip install -r requirements.txt   (or pip install -r requirements.txt)
+#
+# System requirements (not pip):
+#   ffmpeg + ffprobe (6.x or newer)   libass comes bundled with ffmpeg
+#   libegl1 libgles2 libgl1           required by MediaPipe face detection
+#   fonts-noto-color-emoji           optional, for emoji captions
+#
+# On Debian/Ubuntu:
+#   sudo apt-get install -y ffmpeg libegl1 libgles2 libgl1 fonts-noto-color-emoji
+
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+python-multipart>=0.0.9
+faster-whisper>=1.0.3,<2
+# faster-whisper 1.2 calls av.open(metadata_errors=...), dropped in PyAV 13+.
+av>=11,<13
+opencv-python-headless>=4.10,<5
+mediapipe>=0.10.14,<0.11
+numpy>=1.26,<2.2
+fonttools>=4.53
+httpx>=0.27,<1
+yt-dlp>=2024.8.6
+Pillow>=10.4

@@ -1,0 +1,41 @@
+# Render blueprint for ClipForge.
+#
+# Deploy: push this repo to GitHub, then Render → New → Blueprint → pick the repo.
+# It builds the Dockerfile, so ffmpeg/Whisper/MediaPipe come with the image.
+#
+# Two free-tier facts that matter for a video tool:
+#   * Free services sleep after ~15 minutes idle and are rebuilt on wake, so a
+#     long render can be interrupted. Upgrade the instance for real use.
+#   * Free services have no persistent disk. Projects, exports and the Whisper
+#     model live in the container and are lost on redeploy/restart. Attaching a
+#     disk (paid) fixes this — see the commented block below.
+services:
+  - type: web
+    name: clipforge
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: CLIPFORGE_DATA
+        value: /data
+      - key: WHISPER_CACHE
+        value: /data/models/whisper
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      # Set these in the Render dashboard (Environment), not in the repo.
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        value: gpt-4o-mini
+      # Needed for YouTube links from a cloud IP; uploads work without it.
+      - key: YTDLP_PROXY
+        sync: false
+    # Persistent disk (requires a paid instance type). Uncomment together with
+    # the line above so /data survives restarts.
+    # disk:
+    #   name: clipforge-data
+    #   mountPath: /data
+    #   sizeGB: 10

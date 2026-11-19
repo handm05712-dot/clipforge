@@ -1,0 +1,19 @@
+# runtime state — never commit media, exports or model caches
+data/
+.venv/
+node_modules/
+web/node_modules/
+web/dist/
+test-results/
+.pytest_cache/
+**/__pycache__/
+**/*.pyc
+.env
+.env.*
+*.log
+.DS_Store
+
+# Freecode workspace internals
+.build/
+.freecode/
+.freecode-source-ready

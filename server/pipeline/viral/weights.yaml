@@ -1,0 +1,22 @@
+# Viral clip scoring weights.
+#
+# `signals` blends the judge score with the cheap signals. Missing signals are
+# dropped and the rest renormalised, so you can set any of these to 0 to ignore
+# a source without breaking videos that never had it.
+signals:
+  llm: 0.50      # structured judge score
+  heatmap: 0.20  # YouTube "most replayed"
+  chat: 0.15     # live-chat spike
+  audio: 0.15    # loudness spike
+
+# `rubric` is how the judge's 8 dimension scores roll up into one number.
+# They must sum to 1.0 (the code renormalises anyway, but keep them honest).
+rubric:
+  hook: 0.18         # first 3 seconds earn attention
+  emotion: 0.14      # funny / shocking / awe / anger
+  payoff: 0.18       # the moment resolves
+  standalone: 0.14   # makes sense without the rest of the video
+  shareable: 0.12    # quotable, send-to-a-friend
+  novelty: 0.10      # new information, or a fresh take
+  pacing: 0.09       # little dead air
+  relevance: 0.05    # matches the requested topics and content type

@@ -1,0 +1,28 @@
+services:
+  clipforge:
+    build: .
+    image: clipforge:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Projects, uploads, exports, cached Whisper models and cookies all live
+      # here. Back this folder up; it is the whole app state.
+      - clipforge-data:/data
+    environment:
+      # Optional: point at any OpenAI-compatible endpoint for clip judging.
+      # LLM_API_KEY: sk-...
+      # LLM_MODEL: gpt-4o-mini
+      # LLM_BASE_URL: https://api.openai.com/v1
+      # Optional: a cookies file or residential proxy for YouTube downloads.
+      # Mount cookies at /data/cookies.txt instead of pasting them here.
+      # YTDLP_PROXY: http://user:pass@proxy:8080
+      CLIPFORGE_MAX_UPLOAD: 2147483648
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  clipforge-data:
