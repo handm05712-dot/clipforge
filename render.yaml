@@ -14,7 +14,7 @@ services:
     name: clipforge
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: free
+    plan: starter          # 2 GB RAM / 0.5 CPU — the free 512 MB cannot finish a job
     region: oregon
     healthCheckPath: /api/health
     autoDeploy: true
@@ -25,13 +25,13 @@ services:
         value: /data/models/whisper
       - key: PYTHONUNBUFFERED
         value: "1"
-      # 512 MB containers need the smallest usable speech model.
+      # 2 GB is comfortable for the default model; drop to `tiny` on 512 MB.
       - key: WHISPER_MODEL
-        value: tiny
-      # One thread: MediaPipe and ffmpeg both want a core, and the free plan
-      # gives a fraction of one. Oversubscribing is what OOM-killed the process.
+        value: base
+      # Half a CPU on `starter`: cap threads so ffmpeg and Whisper do not
+      # fight over the same core.
       - key: OMP_NUM_THREADS
-        value: "1"
+        value: "2"
       # Set these in the Render dashboard (Environment), not in the repo.
       - key: LLM_API_KEY
         sync: false
@@ -40,9 +40,9 @@ services:
       # Needed for YouTube links from a cloud IP; uploads work without it.
       - key: YTDLP_PROXY
         sync: false
-    # Persistent disk (requires a paid instance type). Uncomment together with
-    # the line above so /data survives restarts.
-    # disk:
-    #   name: clipforge-data
-    #   mountPath: /data
-    #   sizeGB: 10
+    # Persistent disk: without it /data is wiped on every restart, so uploaded
+    # videos, exports and the speech model are lost.
+    disk:
+      name: clipforge-data
+      mountPath: /data
+      sizeGB: 10

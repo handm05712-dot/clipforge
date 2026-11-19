@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 import urllib.request
+import threading
 from pathlib import Path
 from typing import Callable
 
@@ -33,16 +34,32 @@ def _ensure_model(download: bool = True) -> Path | None:
         return None
 
 
-def _detector(score: float = 0.35):
-    import mediapipe as mp
+_DETECTOR = None
+_DETECTOR_LOCK = threading.Lock()
 
-    model_path = _ensure_model()
-    if not model_path:
-        return None
-    base = mp.tasks.BaseOptions(model_asset_path=str(model_path))
-    options = mp.tasks.vision.FaceDetectorOptions(base_options=base, min_detection_confidence=score,
-                                                  running_mode=mp.tasks.vision.RunningMode.IMAGE)
-    return mp.tasks.vision.FaceDetector.create_from_options(options)
+
+def _detector(score: float = 0.35):
+    """One shared detector for the process.
+
+    It used to be built per clip and never closed, so a 20-clip job leaked a
+    detector each time and a 512 MB container was killed mid-job.
+    """
+    global _DETECTOR
+    with _DETECTOR_LOCK:
+        if _DETECTOR is not None:
+            return _DETECTOR
+        import mediapipe as mp
+
+        model_path = _ensure_model()
+        if not model_path:
+            return None
+        base = mp.tasks.BaseOptions(model_asset_path=str(model_path))
+        options = mp.tasks.vision.FaceDetectorOptions(
+            base_options=base, min_detection_confidence=score,
+            running_mode=mp.tasks.vision.RunningMode.IMAGE,
+        )
+        _DETECTOR = mp.tasks.vision.FaceDetector.create_from_options(options)
+        return _DETECTOR
 
 
 def _smooth(values: list[float], window: int = 9) -> list[float]:
@@ -121,11 +138,8 @@ def analyze(src: Path, start: float, end: float, source_w: int, source_h: int,
         ys.append(None if fy is None else fy * frame_h)
         sizes.append(None if fw is None else fw * frame_w)
     cap.release()
-    if detector is not None:
-        try:
-            detector.close()
-        except Exception:
-            pass
+    # The detector is shared across clips (see _detector), so it is only closed
+    # at process shutdown, not here.
 
     found = sum(1 for x in xs if x is not None)
     plan["faces_found"] = found
