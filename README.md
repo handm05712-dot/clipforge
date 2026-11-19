@@ -8,6 +8,11 @@ Built for creators who care about caption typography — you get five ready-made
 looks plus complete control over fonts, colours, stroke, glow, animation and
 position, and every export is a real burned-in MP4.
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/handm05712-dot/clipforge)
+
+Run it on your own machine with `./dev.sh`, or in a container with
+`docker compose up --build`. See Deploying with Docker below for hosting notes.
+
 ---
 
 ## What it does
